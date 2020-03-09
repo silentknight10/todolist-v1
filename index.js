@@ -12,7 +12,8 @@ const app = express();
 let items = ["Buy Food", "Prepare Food", "Cook Food", "Eat Food","Take nap"];
 // set an empty array for new work items
 let workItems = ["Show Up", "Get Settled"];
-
+//create new array for fun list
+let funItems = ["Party", "Camping","Dancing"];
 // set EJS as the viewing engine to display html
 app.set('view engine', 'ejs');
 
@@ -43,15 +44,28 @@ app.post("/", function(req, res) {
     if (req.body.list === "Work") {
         workItems.push(item);
         res.redirect("/work");
-    } else {
+    }
+    else if (req.body.list === "Fun") {
+      funItems.push(item);
+        res.redirect("/fun");
+    }
+
+    else {
         items.push(item);
         res.redirect("/");
     }
 });
 
 // display default to do list on the localhost:3000/work route!
+
 app.get("/work", function(req, res){
-    res.render("list", {listTitle: "Work To Do List", newListItems: workItems})
+        res.render("list", {listTitle: "Work To Do List", newListItems: workItems})
+});
+
+// display default to do list on the localhost:3000/fun route!
+
+app.get("/fun", function(req, res){
+        res.render("list", {listTitle: "fun list", newListItems: funItems})
 });
 
 app.listen(3000, function() {
