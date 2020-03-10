@@ -9,9 +9,9 @@ const date = require(__dirname + "/date.js");
 const app = express();
 
 // set an array for the default items in the list
-let items = ["Buy Food", "Prepare Food", "Cook Food", "Eat Food"];
+let weekdayitems = ["Buy Food", "Prepare Food", "Cook Food", "Eat Food"];
 // set an empty array for new work items
-let workItems = ["Show Up", "Get Settled"];
+let weekendlist = ["Show Up", "Get Settled"];
 
 // set EJS as the viewing engine to display html
 app.set('view engine', 'ejs');
@@ -40,9 +40,16 @@ app.post("/", function(req, res) {
     // code allows items to be added to the regular list and work list
     let item = req.body.newItem;
     
-    if (req.body.list === "Work") {
+    if (req.body.list === "Week") {
         workItems.push(item);
-        res.redirect("/work");
+        res.redirect("/week");
+
+    }
+    else if (req.body.list === "Weekend") {
+      funItems.push(item);
+        res.redirect("/weekend");
+    }
+
     } else {
         items.push(item);
         res.redirect("/");
@@ -50,8 +57,8 @@ app.post("/", function(req, res) {
 });
 
 // display default to do list on the localhost:3000/work route!
-app.get("/work", function(req, res){
-    res.render("list", {listTitle: "Work To Do List", newListItems: workItems})
+app.get("/week", function(req, res){
+    res.render("list", {listTitle: "Week Day To Do List", newListItems: weekdayitems})
 });
 
 app.listen(3000, function() {
